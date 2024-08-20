@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 
 const Navbar = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
-  const [links, setLinks] = useState([
+  const [isColorChanged, setIsColorChanged] = useState(false);
+
+  const links = [
     {
       id: 1,
       name: "Anggota",
@@ -28,7 +30,7 @@ const Navbar = () => {
       name: "Login",
       link: "/login",
     },
-  ]);
+  ];
 
   const handleScroll = () => {
     const position = window.pageYOffset;
@@ -37,8 +39,14 @@ const Navbar = () => {
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
+    // Mengubah warna teks setelah 5 detik
+    const timer = setTimeout(() => {
+      setIsColorChanged(true);
+    }, 5000); // 5000ms = 5 detik
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      clearTimeout(timer);
     };
   }, []);
 
@@ -84,8 +92,12 @@ const Navbar = () => {
                 <a
                   key={link.id}
                   href={link.link}
-                  className={`transition-colors duration-300 ${
-                    scrollPosition > 15 ? "text-black" : "text-white"
+                  className={`transition-colors duration-1000 ${
+                    scrollPosition > 15
+                      ? "text-black"
+                      : isColorChanged
+                      ? "text-white"
+                      : "text-black"
                   }`}
                 >
                   {link.name}
