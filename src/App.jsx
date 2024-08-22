@@ -1,7 +1,14 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { LandingPages, Dashboard } from "./pages";
-import Login from "./pages/login";
+import {
+  LandingPages,
+  Login,
+  Dashboard,
+  Maintenance,
+  Kendaraan,
+  Berita,
+  Karyawan,
+} from "./pages";
 import axios from "axios";
 import { useAuth } from "./store/auth";
 import { jwtDecode } from "jwt-decode";
@@ -26,6 +33,10 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Sidebar />}>
           <Route index element={<Dashboard />} />
+          <Route path="/maintenance" element={<Maintenance />} />
+          <Route path="/kendaraan" element={<Kendaraan />} />
+          <Route path="/berita" element={<Berita />} />
+          <Route path="/karyawan" element={<Karyawan />} />
         </Route>
       </Routes>
     );

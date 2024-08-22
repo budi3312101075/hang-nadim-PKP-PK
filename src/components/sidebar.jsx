@@ -9,6 +9,7 @@ import { FaCar } from "react-icons/fa";
 import { GiAutoRepair } from "react-icons/gi";
 import { IoNewspaperSharp } from "react-icons/io5";
 import { FaUsers } from "react-icons/fa";
+import { RiDashboardHorizontalFill } from "react-icons/ri";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -134,22 +135,28 @@ const Sidebar = () => {
                     to="/"
                     className="flex pl-20 items-center h-8 border-b gap-3 py-5"
                   >
+                    <RiDashboardHorizontalFill size={18} /> Dashboard
+                  </Link>
+                  <Link
+                    to="/maintenance"
+                    className="flex pl-20 items-center h-8 border-b gap-3 py-5"
+                  >
                     <GiAutoRepair size={18} /> Maintenance
                   </Link>
                   <Link
-                    to="/"
+                    to="/kendaraan"
                     className="flex pl-20 items-center h-8 border-b gap-3 py-5"
                   >
                     <FaCar size={18} /> Kendaraan
                   </Link>
                   <Link
-                    to="/"
+                    to="/berita"
                     className="flex pl-20 items-center h-8 border-b gap-3 py-5"
                   >
                     <IoNewspaperSharp size={18} /> Berita
                   </Link>
                   <Link
-                    to="/"
+                    to="/karyawan"
                     className="flex pl-20 items-center h-8 border-b gap-3 py-5"
                   >
                     <FaUsers size={18} /> Karyawan
@@ -161,16 +168,22 @@ const Sidebar = () => {
                     to="/"
                     className="flex pl-20 items-center h-8 border-b gap-3 py-5"
                   >
+                    <RiDashboardHorizontalFill size={18} /> Dashboard
+                  </Link>
+                  <Link
+                    to="/maintenance"
+                    className="flex pl-20 items-center h-8 border-b gap-3 py-5"
+                  >
                     <GiAutoRepair size={18} /> Maintenance
                   </Link>
                   <Link
-                    to="/"
+                    to="/kendaraan"
                     className="flex pl-20 items-center h-8 border-b gap-3 py-5"
                   >
                     <FaCar size={18} /> Kendaraan
                   </Link>
                   <Link
-                    to="/"
+                    to="/berita"
                     className="flex pl-20 items-center h-8 border-b gap-3 py-5"
                   >
                     <IoNewspaperSharp size={18} /> Berita
