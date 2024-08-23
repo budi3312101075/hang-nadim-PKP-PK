@@ -5,3 +5,11 @@
 * {
   font-family: "Poppins", sans-serif;
 }
+
+input[type="date"] {
+  color-scheme: dark; /* Mengubah seluruh date picker ke skema warna gelap */
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* Membuat ikon kalender menjadi hitam */
+}

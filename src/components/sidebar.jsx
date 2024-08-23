@@ -31,7 +31,8 @@ const Sidebar = () => {
     getMes();
   }, []);
 
-  ///////////////   Logic Sidebarrr   /////////////
+  //-------------------- Logic Sidebarrr ----------------------
+
   let role;
   let decoded;
   if (loginResponse) {
@@ -64,16 +65,17 @@ const Sidebar = () => {
     setLogOut();
     toast.success("Logout Berhasil");
   };
-  ///////////////   End Logic Sidebarrr   /////////////
+
+  //---------------------- End Logic Sidebarrr -----------------
   return (
     <>
+      <label htmlFor="my-drawer-2" className="mt-5 drawer-button sm:hidden">
+        <GiHamburgerMenu size={26} />
+      </label>
       <div className="drawer sm:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col items-center justify-center">
           <Outlet />
-          <label htmlFor="my-drawer-2" className="mt-5 drawer-button sm:hidden">
-            <GiHamburgerMenu size={26} />
-          </label>
         </div>
         <div className="drawer-side">
           <label
