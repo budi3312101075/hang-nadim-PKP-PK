@@ -157,13 +157,11 @@ const Maintenance = () => {
                   >
                     <td className="p-3">{index + 1}</td>
                     <td className="p-3">
-                      <div className="avatar mask mask-squircle h-12 w-12 mx-auto">
-                        <img
-                          src={`http://localhost:5000/${item.photo}`}
-                          alt="Avatar"
-                          className="rounded-md"
-                        />
-                      </div>
+                      <img
+                        src={`http://localhost:5000/${item.photo}`}
+                        alt="Avatar"
+                        className="w-16 h-16 object-cover mx-auto rounded-lg"
+                      />
                     </td>
                     <td className="p-3">
                       <h1 className="font-semibold">{item.name}</h1>
