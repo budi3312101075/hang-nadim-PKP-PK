@@ -138,19 +138,13 @@ const Karyawan = () => {
       <div className="bg-primary min-h-screen w-full text-black px-10 pt-16 ">
         <h1 className="text-2xl font-bold mb-8">Daftar Karyawan</h1>
         <div className="flex justify-between mb-6">
-          <div className="flex my-auto gap-2">
-            <button
-              className="py-2 px-6 bg-secondary text-white rounded-md"
-              onClick={() =>
-                document.getElementById("aldnaiolwdhn").showModal()
-              }
-            >
-              Tambah Karyawan
-            </button>
-            <button className="py-2 px-6 bg-green-500 text-white rounded-md">
-              Register Akun Karyawan
-            </button>
-          </div>
+          <button
+            className="py-2 px-6 bg-secondary text-white rounded-md"
+            onClick={() => document.getElementById("aldnaiolwdhn").showModal()}
+          >
+            Tambah Karyawan
+          </button>
+
           <input
             type="text"
             className="input input-bordered w-1/3 bg-white"
