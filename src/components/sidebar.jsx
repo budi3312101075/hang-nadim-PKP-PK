@@ -10,6 +10,7 @@ import { GiAutoRepair } from "react-icons/gi";
 import { IoNewspaperSharp } from "react-icons/io5";
 import { FaUsers } from "react-icons/fa";
 import { RiDashboardHorizontalFill } from "react-icons/ri";
+import { FaUsersGear } from "react-icons/fa6";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -162,6 +163,12 @@ const Sidebar = () => {
                     className="flex pl-20 items-center h-8 border-b gap-3 py-5"
                   >
                     <FaUsers size={18} /> Karyawan
+                  </Link>
+                  <Link
+                    to="/users"
+                    className="flex pl-20 items-center h-8 border-b gap-3 py-5"
+                  >
+                    <FaUsersGear size={18} /> Users
                   </Link>
                 </>
               ) : role === 0 ? (

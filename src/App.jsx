@@ -14,6 +14,7 @@ import axios from "axios";
 import { useAuth } from "./store/auth";
 import { jwtDecode } from "jwt-decode";
 import { Sidebar } from "./components";
+import Users from "./pages/users/users";
 
 const App = () => {
   axios.defaults.baseURL = import.meta.env.VITE_API_URL;
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/kendaraan" element={<Kendaraan />} />
           <Route path="/berita" element={<Berita />} />
           <Route path="/karyawan" element={<Karyawan />} />
+          <Route path="/users" element={<Users />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
