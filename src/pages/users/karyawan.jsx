@@ -5,8 +5,13 @@ import { toast } from "react-toastify";
 
 const Karyawan = () => {
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [currentData, setCurrentData] = useState();
   const [showPhotoInput, setShowPhotoInput] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5); // jumlah item per halaman
+
   const {
     register,
     handleSubmit,
@@ -26,6 +31,7 @@ const Karyawan = () => {
     try {
       const response = await axios.get(`/employee`);
       setData(response.data);
+      setFilteredData(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -66,9 +72,9 @@ const Karyawan = () => {
     setValue("name", data.name);
     setValue("position", data.position);
     setValue("division", data.division);
-    setValue("noSk", data.no_sk); // Gunakan `data.no_sk` sesuai dengan struktur data yang benar
+    setValue("noSk", data.no_sk);
     setValue("photo", data.photo);
-    setShowPhotoInput(false); // Reset state checkbox saat modal dibuka
+    setShowPhotoInput(false);
     document.getElementById("bnakdswyuwad").showModal();
   };
 
@@ -108,20 +114,50 @@ const Karyawan = () => {
     }
   };
 
+  // Logika untuk search
+  useEffect(() => {
+    setFilteredData(
+      data.filter((item) =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+    setCurrentPage(1); // Reset ke halaman pertama saat melakukan pencarian
+  }, [searchQuery, data]);
+
+  // Logika untuk pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   return (
     <>
-      <div className="bg-primary min-h-screen w-full text-black px-10 pt-16 pb-40">
+      <div className="bg-primary min-h-screen w-full text-black px-10 pt-16 ">
         <h1 className="text-2xl font-bold mb-8">Daftar Karyawan</h1>
-        <div className="flex justify-between">
-          <button
-            className="py-2 px-6 bg-secondary text-white rounded-md mb-6"
-            onClick={() => document.getElementById("aldnaiolwdhn").showModal()}
-          >
-            Register Akun Karyawan
-          </button>
-          <button className="py-2 px-6 bg-green-500 text-white rounded-md mb-6">
-            Tambah Karyawan
-          </button>
+        <div className="flex justify-between mb-6">
+          <div className="flex my-auto gap-2">
+            <button
+              className="py-2 px-6 bg-secondary text-white rounded-md"
+              onClick={() =>
+                document.getElementById("aldnaiolwdhn").showModal()
+              }
+            >
+              Register Akun Karyawan
+            </button>
+            <button className="py-2 px-6 bg-green-500 text-white rounded-md">
+              Tambah Karyawan
+            </button>
+          </div>
+          <input
+            type="text"
+            className="input input-bordered w-1/3 bg-white"
+            placeholder="Cari nama karyawan..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </div>
 
         <div className="overflow-x-auto">
@@ -138,13 +174,13 @@ const Karyawan = () => {
               </tr>
             </thead>
             <tbody className="text-center">
-              {data?.map((item, index) => (
+              {currentItems?.map((item, index) => (
                 <tr key={index} className="h-16">
-                  <td>{index + 1}</td>
+                  <td>{indexOfFirstItem + index + 1}</td>
                   <td>
                     <img
                       src={`http://localhost:5000/${item.photo}`}
-                      alt="Car"
+                      alt="Foto Karyawan"
                       className="w-16 h-16 object-cover mx-auto rounded-lg"
                     />
                   </td>
@@ -170,6 +206,21 @@ const Karyawan = () => {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Pagination */}
+        <div className="flex justify-center mt-4">
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              className={`px-4 py-2 mx-1 border rounded ${
+                currentPage === page ? "bg-secondary text-white" : "bg-white"
+              }`}
+              onClick={() => handlePageChange(page)}
+            >
+              {page}
+            </button>
+          ))}
         </div>
       </div>
 

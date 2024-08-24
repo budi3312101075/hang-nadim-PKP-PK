@@ -8,6 +8,7 @@ import {
   Kendaraan,
   Berita,
   Karyawan,
+  NotFound,
 } from "./pages";
 import axios from "axios";
 import { useAuth } from "./store/auth";
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/berita" element={<Berita />} />
           <Route path="/karyawan" element={<Karyawan />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     );
   }
@@ -51,6 +53,7 @@ const App = () => {
           <Route path="/kendaraan" element={<Kendaraan />} />
           <Route path="/berita" element={<Berita />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     );
   }
@@ -60,6 +63,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<LandingPages />} />
         <Route path="/login" element={<Login />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
