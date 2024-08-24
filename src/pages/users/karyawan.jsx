@@ -145,10 +145,10 @@ const Karyawan = () => {
                 document.getElementById("aldnaiolwdhn").showModal()
               }
             >
-              Register Akun Karyawan
+              Tambah Karyawan
             </button>
             <button className="py-2 px-6 bg-green-500 text-white rounded-md">
-              Tambah Karyawan
+              Register Akun Karyawan
             </button>
           </div>
           <input
@@ -227,7 +227,7 @@ const Karyawan = () => {
       {/* -------------- Modal add --------------- */}
       <dialog id="aldnaiolwdhn" className="modal">
         <div className="modal-box bg-primary text-black max-w-xl flex flex-col gap-8">
-          <h3 className="font-bold text-lg">Tambah Data Mobil</h3>
+          <h3 className="font-bold text-lg">Tambah Karyawan</h3>
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-5 w-full justify-center items-center rounded-xl"
