@@ -30,7 +30,7 @@ const Login = () => {
         toast.success("Selamat Datang");
       }
     } catch (error) {
-      toast.error("username atau password anda salah");
+      toast.error(error.response.data);
     }
   };
 
