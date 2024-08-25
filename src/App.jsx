@@ -9,12 +9,14 @@ import {
   Berita,
   Karyawan,
   NotFound,
+  Users,
+  TambahBerita,
+  DetailBerita,
 } from "./pages";
 import axios from "axios";
 import { useAuth } from "./store/auth";
 import { jwtDecode } from "jwt-decode";
 import { Sidebar } from "./components";
-import Users from "./pages/users/users";
 
 const App = () => {
   axios.defaults.baseURL = import.meta.env.VITE_API_URL;
@@ -40,6 +42,8 @@ const App = () => {
           <Route path="/berita" element={<Berita />} />
           <Route path="/karyawan" element={<Karyawan />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/TambahBerita" element={<TambahBerita />} />
+          <Route path="/DetailBerita/:id" element={<DetailBerita />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -54,6 +58,8 @@ const App = () => {
           <Route path="/maintenance" element={<Maintenance />} />
           <Route path="/kendaraan" element={<Kendaraan />} />
           <Route path="/berita" element={<Berita />} />
+          <Route path="/TambahBerita" element={<TambahBerita />} />
+          <Route path="/DetailBerita/:id" element={<DetailBerita />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
