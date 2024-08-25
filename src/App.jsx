@@ -71,6 +71,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<LandingPages />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/DetailBerita/:id" element={<DetailBerita />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

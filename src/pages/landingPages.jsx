@@ -1,218 +1,61 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Marquee from "react-fast-marquee";
 import {
+  Footer,
   Navbar,
   PersonelAlpha,
   PersonelBravo,
   PersonelCharlie,
 } from "../components";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const LandingPages = () => {
   const [personel, setPersonel] = useState("alpha");
   const [visible, setVisible] = useState(4);
-  const [dataAlpha, setDataAlpha] = useState([
-    {
-      id: 1,
-      foto: "./budi.png",
-      nama: "Budi Prayoga, A.Md.Kom.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "charlie",
-    },
-    {
-      id: 2,
-      foto: "./budi.png",
-      nama: "Budi Prayoga, A.Md.Kom.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "charlie",
-    },
-    {
-      id: 3,
-      foto: "./budi.png",
-      nama: "Budi Prayoga, A.Md.Kom.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "bravo",
-    },
-    {
-      id: 4,
-      foto: "./budi.png",
-      nama: "Budi Prayoga, A.Md.Kom.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "bravo",
-    },
-    {
-      id: 5,
-      foto: "./budi.png",
-      nama: "Budi Prayoga, A.Md.Kom.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "alpha",
-    },
-    {
-      id: 6,
-      foto: "./budi.png",
-      nama: "Budi Prayoga, A.Md.Kom.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "alpha",
-    },
-    {
-      id: 7,
-      foto: "./budi.png",
-      nama: "Budi Prayoga, A.Md.Kom.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "alpha",
-    },
-    {
-      id: 8,
-      foto: "./budi.png",
-      nama: "Budi Prayoga, A.Md.Kom.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "alpha",
-    },
-  ]);
+  const [visibleNews, setVisibleNews] = useState(8);
+  const [dataAlpha, setDataAlpha] = useState([]);
+  const [dataCharlie, setDataCharlie] = useState([]);
+  const [dataBravo, setDataBravo] = useState([]);
+  const [berita, setBerita] = useState([]);
 
-  const [dataCharlie, setDataCharlie] = useState([
-    {
-      id: 1,
-      foto: "./zulkarnain.png",
-      nama: "ZULKARNAIN, S.KOM.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "charlie",
-    },
-    {
-      id: 2,
-      foto: "./zulkarnain.png",
-      nama: "ZULKARNAIN, S.KOM.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "charlie",
-    },
-    {
-      id: 3,
-      foto: "./zulkarnain.png",
-      nama: "ZULKARNAIN, S.KOM.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "bravo",
-    },
-    {
-      id: 4,
-      foto: "./zulkarnain.png",
-      nama: "ZULKARNAIN, S.KOM.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "bravo",
-    },
-    {
-      id: 5,
-      foto: "./zulkarnain.png",
-      nama: "ZULKARNAIN, S.KOM.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "alpha",
-    },
-    {
-      id: 6,
-      foto: "./zulkarnain.png",
-      nama: "ZULKARNAIN, S.KOM.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "alpha",
-    },
-    {
-      id: 7,
-      foto: "./zulkarnain.png",
-      nama: "ZULKARNAIN, S.KOM.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "alpha",
-    },
-    {
-      id: 8,
-      foto: "./zulkarnain.png",
-      nama: "ZULKARNAIN, S.KOM.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "alpha",
-    },
-  ]);
+  const getPersonnel = async () => {
+    try {
+      const response = await axios.get("/employee");
+      setDataAlpha(response.data.alpha);
+      setDataBravo(response.data.bravo);
+      setDataCharlie(response.data.charlie);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  const [dataBravo, setDataBravo] = useState([
-    {
-      id: 1,
-      foto: "./atong.png",
-      nama: "atong, S.KOM.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "charlie",
-    },
-    {
-      id: 2,
-      foto: "./atong.png",
-      nama: "atong, S.KOM.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "charlie",
-    },
-    {
-      id: 3,
-      foto: "./atong.png",
-      nama: "atong, S.KOM.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "bravo",
-    },
-    {
-      id: 4,
-      foto: "./atong.png",
-      nama: "atong, S.KOM.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "bravo",
-    },
-    {
-      id: 5,
-      foto: "./atong.png",
-      nama: "atong, S.KOM.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "alpha",
-    },
-    {
-      id: 6,
-      foto: "./atong.png",
-      nama: "atong, S.KOM.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "alpha",
-    },
-    {
-      id: 7,
-      foto: "./atong.png",
-      nama: "atong, S.KOM.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "alpha",
-    },
-    {
-      id: 8,
-      foto: "./atong.png",
-      nama: "atong, S.KOM.",
-      jabatan: "ARFF OPERATION MANAGER",
-      nip: "0353/PKP-S1/DBU/IV/2020",
-      divisi: "alpha",
-    },
-  ]);
+  const fetchBerita = async () => {
+    try {
+      const response = await axios.get("/news"); // Sesuaikan endpoint
+      setBerita(response.data);
+    } catch (error) {
+      console.error("Gagal mengambil data berita:", error);
+    }
+  };
+
+  // Fungsi untuk memotong string menjadi 7 karakter
+  const truncateText = (text, maxLength) => {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + "...";
+  };
+
+  useEffect(() => {
+    getPersonnel();
+    fetchBerita();
+  }, [personel]);
 
   const handleLoadMore = () => {
     setVisible((prevVisible) => prevVisible + 4);
+  };
+
+  const handleLoadMoreNews = () => {
+    setVisibleNews((prevVisible) => prevVisible + 4);
   };
 
   return (
@@ -266,7 +109,7 @@ const LandingPages = () => {
         <img src="./incheon.webp" alt="AP2" />
         <img src="./wika.webp" alt="AP2" />
       </Marquee>
-      <div className="max-h-max md:px-14 px-5 py-10 bg-primary">
+      <div className="max-h-max md:px-14 px-5 py-10 bg-primary" id="anggota">
         <h1 className="md:text-2xl text-xl text-black text-center font-semibold">
           Hang Nadim Batam ARFF Personnel
         </h1>
@@ -330,7 +173,7 @@ const LandingPages = () => {
           )}
         </div>
       </div>
-      <div className="max-h-max md:px-14 px-5 py-10  ">
+      <div className="max-h-max md:px-14 px-5 py-10" id="tentang">
         <h1 className="md:text-2xl text-xl text-black text-center font-semibold">
           Tentang Kami
         </h1>
@@ -358,6 +201,65 @@ const LandingPages = () => {
           />
         </div>
       </div>
+      <div
+        className="max-h-max md:px-14 px-5 pt-10 pb-20 bg-primary"
+        id="berita"
+      >
+        <h1 className="md:text-2xl text-xl text-black text-center font-semibold">
+          Berita Terkini
+        </h1>
+        <div className="md:w-96 sm:w-72 w-24 h-[1px] bg-slate-400 mx-auto mt-1 flex items-center">
+          <div className="w-12 h-[3px] bg-secondary mx-auto" />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-10">
+          {berita.slice(0, visibleNews).map((item) => (
+            <div
+              key={item.uuid}
+              className="card lg:card-side bg-primary shadow-xl "
+            >
+              <figure>
+                <img
+                  className="h-full"
+                  src={
+                    /<img[^>]+src="([^">]+)"/g.exec(item.content)?.[1] ||
+                    "https://mgmall.s3.amazonaws.com/img/062023/390bed03e54f6440416f0568f61a82b563176996.jpg" // Placeholder image
+                  }
+                  alt={item.title}
+                />
+              </figure>
+              <div className="card-body">
+                <h1 className="card-title text-lg ">
+                  {truncateText(item.title, 7)}
+                </h1>
+                <p className="text-xs">
+                  {truncateText(item.content.replace(/<[^>]+>/g, ""), 10)}
+                </p>
+                <div className="flex gap-1 ">
+                  <Link
+                    to={`/DetailBerita/${item.uuid}`}
+                    className="bg-secondary text-white px-4 py-2 rounded-xl w-full text-xs text-center"
+                  >
+                    Lihat
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex justify-center mt-5 ">
+          {visibleNews < berita.length && (
+            <button
+              onClick={handleLoadMoreNews}
+              className="bg-[#14191e] py-2 px-4 rounded-lg text-[#a6adbb] text-base font-semibold hover:bg-[#646ee4] hover:text-black duration-300 "
+            >
+              Load More
+            </button>
+          )}
+        </div>
+      </div>
+      <Footer />
     </div>
   );
 };

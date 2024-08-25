@@ -30,8 +30,8 @@ const Karyawan = () => {
   const getKaryawan = async () => {
     try {
       const response = await axios.get(`/employee`);
-      setData(response.data);
-      setFilteredData(response.data);
+      setData(response.data.data);
+      setFilteredData(response.data.data);
     } catch (error) {
       console.log(error);
     }
