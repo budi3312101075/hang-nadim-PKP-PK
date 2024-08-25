@@ -29,7 +29,7 @@ const Users = () => {
   const getKaryawan = async () => {
     try {
       const response = await axios.get("/employee");
-      setKaryawan(response.data);
+      setKaryawan(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -138,7 +138,7 @@ const Users = () => {
                   <td>{indexOfFirstItem + index + 1}</td>
                   <td>
                     <img
-                      src={`http://localhost:5000/${item.photo}`}
+                      src={`${import.meta.env.VITE_API_FOTO}/${item.photo}`}
                       alt="Foto Karyawan"
                       className="w-16 h-16 object-cover mx-auto rounded-lg"
                     />

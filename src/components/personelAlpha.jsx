@@ -17,7 +17,7 @@ const PersonelAlpha = ({ visible, dataAlpha }) => {
             <div className="absolute inset-0 flex items-center justify-center">
               <img
                 className="w-40 mt-4"
-                src={`http://localhost:5000/${item.photo}`}
+                src={`${import.meta.env.VITE_API_FOTO}/${item.photo}`}
                 alt="pas-foto"
               />
             </div>
