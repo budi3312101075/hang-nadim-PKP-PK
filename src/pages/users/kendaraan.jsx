@@ -2,11 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { BeatLoader } from "react-spinners"; // Import a spinner library
 
 const Kendaraan = () => {
   const [data, setData] = useState([]);
   const [currentData, setCurrentData] = useState();
   const [showPhotoInput, setShowPhotoInput] = useState(false);
+  const [loading, setLoading] = useState(false); // Loading state for form submission
+
   const {
     register,
     handleSubmit,
@@ -41,6 +44,8 @@ const Kendaraan = () => {
     dataToSubmit.append("type", formData.type);
     dataToSubmit.append("photo", formData.photo[0]);
 
+    setLoading(true); // Start loading
+
     try {
       await axios.post("/car", dataToSubmit, {
         headers: {
@@ -55,6 +60,8 @@ const Kendaraan = () => {
       toast.error("Gagal menambahkan mobil");
       document.getElementById("wadadw").close();
       console.error(error);
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -84,6 +91,8 @@ const Kendaraan = () => {
     formData.append("type", data.type);
     formData.append("photo", data.photo[0]);
 
+    setLoading(true); // Start loading
+
     try {
       await axios.patch(`/car/${currentData.id}`, formData, {
         headers: {
@@ -97,6 +106,8 @@ const Kendaraan = () => {
     } catch (error) {
       document.getElementById("alfjnak").close();
       console.log(error);
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -128,7 +139,7 @@ const Kendaraan = () => {
                   <td>{index + 1}</td>
                   <td>
                     <img
-                      src={`${import.meta.env.VITE_API_FOTO}/${item.photo}`}
+                      src={`${item.photo}`}
                       alt="Car"
                       className="w-16 h-16 object-cover mx-auto rounded-lg"
                     />
@@ -177,6 +188,7 @@ const Kendaraan = () => {
                 errors.name && "input-error"
               }`}
               placeholder="Nama mobil"
+              disabled={loading} // Disable during loading
             />
 
             {/* Input Type Mobil */}
@@ -196,6 +208,7 @@ const Kendaraan = () => {
                 errors.type && "input-error"
               }`}
               placeholder="Type mobil"
+              disabled={loading} // Disable during loading
             />
 
             {/* Input File Upload */}
@@ -211,6 +224,7 @@ const Kendaraan = () => {
                 errors.photo && "input-error"
               }`}
               accept="image/*"
+              disabled={loading} // Disable during loading
             />
             {errors.photo && (
               <span className="text-red-500 text-sm">
@@ -222,8 +236,10 @@ const Kendaraan = () => {
               <button
                 className="w-full rounded-lg bg-cyan-500 py-2 px-5"
                 type="submit"
+                disabled={loading} // Disable during loading
               >
-                Kirim
+                {loading ? <BeatLoader size={8} color="#fff" /> : "Kirim"}
+                {/* Spinner during loading */}
               </button>
               <button
                 className="w-full rounded-lg bg-red-500 py-2 px-5"
@@ -232,6 +248,7 @@ const Kendaraan = () => {
                   reset();
                 }}
                 type="button"
+                disabled={loading} // Disable during loading
               >
                 Cancel
               </button>
@@ -243,7 +260,7 @@ const Kendaraan = () => {
       {/* -------------- Modal update --------------- */}
       <dialog id="alfjnak" className="modal">
         <div className="modal-box bg-primary text-black max-w-xl flex flex-col gap-8">
-          <h3 className="font-bold text-lg">Ubah Data Mobil</h3>
+          <h3 className="font-bold text-lg">Edit Data Mobil</h3>
           <form
             onSubmit={handleSubmits(onUpdate)}
             className="flex flex-col gap-5 w-full justify-center items-center rounded-xl"
@@ -258,9 +275,10 @@ const Kendaraan = () => {
               })}
               type="text"
               className={`input input-bordered w-full bg-primary border border-black placeholder:text-tertiary ${
-                formState.name && "input-error"
+                formState.errors.name && "input-error"
               }`}
               placeholder="Nama mobil"
+              disabled={loading} // Disable during loading
             />
 
             {/* Input Type Mobil */}
@@ -277,49 +295,43 @@ const Kendaraan = () => {
               })}
               type="text"
               className={`input input-bordered w-full bg-primary border border-black placeholder:text-tertiary ${
-                formState.type && "input-error"
+                formState.errors.type && "input-error"
               }`}
               placeholder="Type mobil"
+              disabled={loading} // Disable during loading
             />
 
-            {/* Checkbox untuk Input Foto */}
-            <div className="flex items-center -mt-2 -mb-1 mr-[390px]">
+            {/* Checkbox for new photo */}
+            <div className="flex justify-center items-center gap-2">
               <input
                 type="checkbox"
                 id="showPhotoInput"
-                className="mr-2"
-                onChange={(e) => setShowPhotoInput(e.target.checked)}
+                className="checkbox checkbox-primary"
+                checked={showPhotoInput}
+                onChange={() => setShowPhotoInput(!showPhotoInput)}
+                disabled={loading} // Disable during loading
               />
-              <label
-                htmlFor="showPhotoInput"
-                className="text-sm text-slate-600"
-              >
-                Ubah foto mobil
-              </label>
+              <label htmlFor="showPhotoInput">Upload foto baru?</label>
             </div>
 
             {showPhotoInput && (
-              <>
-                <span className="text-sm mr-[400px] -mb-4 -mt-2 text-slate-600">
-                  Upload Foto Mobil
-                </span>
-                <input
-                  {...registers("photo")}
-                  type="file"
-                  className={`file-input file-input-bordered w-full bg-primary border border-black ${
-                    formState.photo && "input-error"
-                  }`}
-                  accept="image/*"
-                />
-              </>
+              <input
+                {...registers("photo")}
+                type="file"
+                className="file-input file-input-bordered w-full bg-primary border border-black"
+                accept="image/*"
+                disabled={loading} // Disable during loading
+              />
             )}
 
             <div className="flex w-full mt-2 gap-2">
               <button
                 className="w-full rounded-lg bg-cyan-500 py-2 px-5"
                 type="submit"
+                disabled={loading} // Disable during loading
               >
-                Kirim
+                {loading ? <BeatLoader size={8} color="#fff" /> : "Update"}
+                {/* Spinner during loading */}
               </button>
               <button
                 className="w-full rounded-lg bg-red-500 py-2 px-5"
@@ -328,6 +340,7 @@ const Kendaraan = () => {
                   resets();
                 }}
                 type="button"
+                disabled={loading} // Disable during loading
               >
                 Cancel
               </button>

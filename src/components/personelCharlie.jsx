@@ -15,11 +15,7 @@ const PersonelCharlie = ({ visible, dataCharlie }) => {
               alt="arff"
             />
             <div className="absolute inset-0 flex items-center justify-center">
-              <img
-                className="w-40 mt-4"
-                src={`${import.meta.env.VITE_API_FOTO}/${item.photo}`}
-                alt="pas-foto"
-              />
+              <img className="w-40 mt-4" src={`${item.photo}`} alt="pas-foto" />
             </div>
           </div>
           <div className="w-full h-1/3 bg-white rounded-b-xl p-4 flex flex-col items-center justify-center text-center">

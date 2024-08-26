@@ -94,9 +94,7 @@ const Sidebar = () => {
               >
                 <div className="w-24 rounded-full">
                   {getMe?.photo != null ? (
-                    <img
-                      src={`${import.meta.env.VITE_API_FOTO}/${getMe?.photo}`}
-                    />
+                    <img src={`${getMe?.photo}`} />
                   ) : (
                     <img src="./../user.png" />
                   )}

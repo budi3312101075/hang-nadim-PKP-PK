@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { BeatLoader } from "react-spinners";
 
 const Karyawan = () => {
   const [data, setData] = useState([]);
@@ -11,6 +12,7 @@ const Karyawan = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5); // jumlah item per halaman
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -49,6 +51,8 @@ const Karyawan = () => {
     formData.append("noSk", data.noSk);
     formData.append("photo", data.photo[0]);
 
+    setLoading(true);
+
     try {
       await axios.post("/employee", formData, {
         headers: {
@@ -64,6 +68,8 @@ const Karyawan = () => {
       reset();
       document.getElementById("aldnaiolwdhn").close();
       console.error(error);
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -87,6 +93,8 @@ const Karyawan = () => {
       formData.append("noSk", data.noSk);
       formData.append("photo", data.photo[0]);
 
+      setLoading(true);
+
       await axios.patch(`/employee/${currentData.id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -100,6 +108,8 @@ const Karyawan = () => {
       document.getElementById("bnakdswyuwad").close();
       toast.error("Gagal memperbarui karyawan");
       console.error(error);
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -173,7 +183,7 @@ const Karyawan = () => {
                   <td>{indexOfFirstItem + index + 1}</td>
                   <td>
                     <img
-                      src={`${import.meta.env.VITE_API_FOTO}/${item.photo}`}
+                      src={`${item.photo}`}
                       alt="Foto Karyawan"
                       className="w-16 h-16 object-cover mx-auto rounded-lg"
                     />
@@ -348,8 +358,10 @@ const Karyawan = () => {
               <button
                 className="w-full rounded-lg bg-cyan-500 py-2 px-5"
                 type="submit"
+                disabled={loading} // Disable during loading
               >
-                Kirim
+                {loading ? <BeatLoader size={8} color="#fff" /> : "Kirim"}
+                {/* Spinner during loading */}
               </button>
               <button
                 className="w-full rounded-lg bg-red-500 py-2 px-5"
@@ -358,6 +370,7 @@ const Karyawan = () => {
                   reset();
                 }}
                 type="button"
+                disabled={loading} // Disable during loading
               >
                 Cancel
               </button>
@@ -468,19 +481,16 @@ const Karyawan = () => {
               placeholder="Nomor SK"
             />
 
-            <div className="flex items-center -mt-2 -mb-1 mr-[432px]">
+            <div className="flex justify-center items-center gap-2">
               <input
                 type="checkbox"
                 id="showPhotoInput"
-                className="mr-2"
-                onChange={(e) => setShowPhotoInput(e.target.checked)}
+                className="checkbox checkbox-primary"
+                checked={showPhotoInput}
+                onChange={() => setShowPhotoInput(!showPhotoInput)}
+                disabled={loading} // Disable during loading
               />
-              <label
-                htmlFor="showPhotoInput"
-                className="text-sm text-slate-600"
-              >
-                Ubah foto
-              </label>
+              <label htmlFor="showPhotoInput">Upload foto baru?</label>
             </div>
 
             {/* Input File Upload */}
@@ -502,8 +512,10 @@ const Karyawan = () => {
               <button
                 className="w-full rounded-lg bg-cyan-500 py-2 px-5"
                 type="submit"
+                disabled={loading} // Disable during loading
               >
-                Kirim
+                {loading ? <BeatLoader size={8} color="#fff" /> : "Kirim"}
+                {/* Spinner during loading */}
               </button>
               <button
                 className="w-full rounded-lg bg-red-500 py-2 px-5"
@@ -512,6 +524,7 @@ const Karyawan = () => {
                   resets();
                 }}
                 type="button"
+                disabled={loading} // Disable during loading
               >
                 Cancel
               </button>
