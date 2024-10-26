@@ -139,7 +139,7 @@ const Kendaraan = () => {
                   <td>{index + 1}</td>
                   <td>
                     <img
-                      src={`${item.photo}`}
+                      src={`${import.meta.env.VITE_API_FOTO}/${item.photo}`}
                       alt="Car"
                       className="w-16 h-16 object-cover mx-auto rounded-lg"
                     />

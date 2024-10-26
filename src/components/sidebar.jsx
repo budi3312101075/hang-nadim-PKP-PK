@@ -93,10 +93,13 @@ const Sidebar = () => {
                 onClick={toggleDropdown}
               >
                 <div className="w-24 rounded-full">
-                  {getMe?.photo != null ? (
-                    <img src={`${getMe?.photo}`} />
+                  {getMe?.photo ? (
+                    <img
+                      src={`${import.meta.env.VITE_API_FOTO}/${getMe.photo}`}
+                      alt="User Photo"
+                    />
                   ) : (
-                    <img src="./../user.png" />
+                    <img src="./../user.png" alt="Default User Photo" />
                   )}
                 </div>
               </div>
